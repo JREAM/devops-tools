@@ -1,0 +1,8 @@
+---
+# --------------------------------------------------------------
+# Include Subpackages to install to keep uncluttered
+# --------------------------------------------------------------
+- include: docker.yml
+- include: docker-machine.yml
+- include: docker-compose.yml
+- include: portainer.yml

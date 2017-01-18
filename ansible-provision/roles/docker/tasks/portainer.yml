@@ -1,0 +1,14 @@
+---
+# --------------------------------------------------------------
+# Install Portainer for Docker
+# --------------------------------------------------------------
+- name: install docker portainer image
+  docker_container:
+    name: portainer
+    image: portainer/portainer
+    state: present
+    exposed_ports:
+      - "9000:9000"
+    detach: true
+    # @TODO:
+    docker_host: tcp://mydockerhost.mydomain:2375

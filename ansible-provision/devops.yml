@@ -1,0 +1,9 @@
+---
+- hosts: devops_servers
+  remote_user: root
+  gather_facts: true
+  roles:
+    - role: common
+    - role: security
+    - role: docker
+    - role: portainer

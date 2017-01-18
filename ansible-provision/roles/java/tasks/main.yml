@@ -1,0 +1,6 @@
+---
+- name: install openjdk
+  apt: name=openjdk-7-jre-headless state=present
+
+- name: install default-jdk
+  apt: name=default-jdk state=present

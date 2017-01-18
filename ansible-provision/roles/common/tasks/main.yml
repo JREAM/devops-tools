@@ -1,0 +1,49 @@
+---
+# --------------------------------------------------------------
+# Get Uname Details to a variable for use in playbooks
+# --------------------------------------------------------------
+
+# eg: 4.4.0-45-generic
+- shell: uname -r
+  ignore_errors: yes
+  register: uname_kernel_version
+- debug: msg="{{ uname_kernel_version.stdout }}"
+
+# eg: Linux
+- name: get linux kernal name, eg Linux
+  shell: uname -s
+  ignore_errors: yes
+  register: uname_kernel_name
+- debug: msg="{{ uname_kernel_name.stdout }}"
+
+# eg: x86_64
+- name: get the linux hardware type, eg x86_64
+  shell: uname -m
+  ignore_errors: yes
+  register: uname_machine
+- debug: msg="{{ uname_machine.stdout }}"
+
+
+# --------------------------------------------------------------
+# Install common tools
+# --------------------------------------------------------------
+- name: install common tools
+  apt: name="{{item}}" state=present
+  with_items:
+     - at
+     - unzip
+     - bzip2
+     - git
+     - curl
+     - htop
+     - python-software-properties
+     - tree
+     - whois
+     - xclip
+     - python-dev
+     - npm
+     # For Docker Auto-Complete
+     - socat
+     - jq
+  become: true
+

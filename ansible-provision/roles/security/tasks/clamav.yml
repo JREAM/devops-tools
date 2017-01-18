@@ -1,0 +1,18 @@
+---
+# --------------------------------------------------------------
+# Clam Antivurs
+# --------------------------------------------------------------
+- name: install clamav
+  apt: pkg={{ item }} state=present
+  items:
+    - clamav
+    - clamav-daemon
+    - clamav-freshclam
+  become: true
+
+# --------------------------------------------------------------
+# Update Definitions after Install, This runs hourly
+# --------------------------------------------------------------
+- name: update clamav database
+  command: freshclam
+  become: true

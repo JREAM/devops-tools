@@ -1,0 +1,49 @@
+---
+# --------------------------------------------------------------
+# Include Rootkit Hunter (RKHunter)
+# --------------------------------------------------------------
+- name: install rkhunter
+  apt: name=rkhunter state=latest update_cache=yes
+  become: true
+
+# --------------------------------------------------------------
+# Update Definitions
+# --------------------------------------------------------------
+- name: rkhunter | update
+  command: rkhunter --propupd
+  become: true
+
+# --------------------------------------------------------------
+# Configuration
+# --------------------------------------------------------------
+- name: configure rkhunter
+  lineinfile:
+    dest=/etc/rkhunter.conf
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+    backup=yes
+  with_items:
+    - {
+        regexp: ALLOW_SSH_ROOT_USER=,
+        # @TODO: Make sure rkhunter config answer is true, not yes, or 1/0 etc
+        line: "ALLOW_SSH_ROOT_USER=true"
+      }
+    - {
+        regexp: ALLOWHIDDENDIR=\"/etc/.java\",
+        line: ALLOWHIDDENDIR=\"/etc/.java\"
+      }
+    - {
+        regexp: SCRIPTWHITELIST=/usr/bin/unhide.rb,
+        line: SCRIPTWHITELIST=/usr/bin/unhide.rb
+      }
+
+# --------------------------------------------------------------
+# Let this run daily
+# --------------------------------------------------------------
+- name: cronjob rkhunter daily
+  lineinfile:
+    dest=/etc/default/rkhunter
+    regexp="^CRON_DAILY_RUN"
+    line='CRON_DAILY_RUN="yes"'
+    backup=yes
+

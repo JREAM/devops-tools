@@ -1,0 +1,14 @@
+[test_servers]
+192.168.0.89
+
+[dockercloud_servers]
+
+[redis_servers]
+prod-redis-01 ansible_host=192.168.0.90
+prod-redis-02 ansible_host=192.168.0.91
+prod-redis-03 ansible_host=192.168.0.92
+
+[mongo_servers]
+prod-db-ny-01 ansible_host=192.168.0.93
+prod-db-ny-02 ansible_host=192.168.0.94
+prod-db-ny-03 ansible_host=192.168.0.95

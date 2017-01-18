@@ -1,0 +1,3 @@
+requests
+fabric
+click==6.6

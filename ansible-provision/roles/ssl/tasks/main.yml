@@ -1,0 +1,6 @@
+---
+# --------------------------------------------------------------
+# SSL Certificates to place on Servers from the ./files folder
+# --------------------------------------------------------------
+# - name: "ssl logstash forwarder"
+#   copy: "xyz" dest="xyz"

@@ -1,0 +1,69 @@
+---
+# --------------------------------------------------------------
+# Copy Dot Files
+# --------------------------------------------------------------
+
+# @TODO: This needs fixing, not vagrant related
+# Bashrc
+- get_url:
+    url: https://github.com/JREAM/config-ubuntu/blob/master/files/.bashrc
+    dest: /vagrant/data
+    mode: 664
+
+- copy: src=/vagrant/data/.bashrc dest=/home/vagrant/.bashrc owner=vagrant group=vagrant mode=0644
+- copy: src=/vagrant/data/.bashrc dest=/root/.bashrc owner=root group=root mode=0644
+  become: true
+
+# Vimrc
+- get_url:
+    url: https://github.com/JREAM/config-ubuntu/blob/master/files/.vimrc
+    dest: /vagrant/data
+    mode: 664
+
+- copy: src=/vagrant/data/.vimrc dest=/home/vagrant/.vimrc owner=vagrant group=vagrant mode=0644
+- copy: src=/vagrant/data/.vimrc dest=/root/.vimrc owner=root group=root mode=0644
+  become: true
+
+# Profile
+- get_url:
+    url: https://github.com/JREAM/config-ubuntu/blob/master/files/.profile
+    dest: /vagrant/data
+    mode: 664
+
+- copy: src=/vagrant/data/.profile dest=/home/vagrant/.profile owner=vagrant group=vagrant mode=0644
+- copy: src=/vagrant/data/.profile dest=/root/.profile owner=root group=root mode=0644
+  become: true
+
+# Exports
+- get_url:
+    url: https://github.com/JREAM/config-ubuntu/blob/master/files/.exports
+    dest: /vagrant/data
+    mode: 664
+
+- copy: src=/vagrant/data/.exports dest=/home/vagrant/.export owner=vagrant group=vagrant mode=0644
+- copy: src=/vagrant/data/.exports dest=/root/.export owner=root group=root mode=0644
+  become: true
+
+# Clone Repo
+- git: repo=https://github.com/gmarik/Vundle.vim.git dest=/home/vagrant/.vim/bundle/Vundle.vim clone=yes update=no
+  become: true
+
+- git: repo=https://github.com/gmarik/Vundle.vim.git dest=/root/.vim/bundle/Vundle.vim clone=yes update=no
+  become: true
+
+- name: vagrant home folder permissions
+  file: dest=/home/vagrant owner=vagrant group=vagrant recurse=yes
+  become: true
+
+- name: root home folder permissions
+  file: dest=/root owner=root group=root recurse=yes
+  become: true
+
+# Install Vundle Plugins
+# - name: root user install vundle
+#   shell: vim -E -s -c "source /root/.vimrc" -c PluginInstall -c qa
+#   become: true
+
+# - name: vagrant user install vundle
+#   shell: vim -E -s -c "source /home/vagrant/.vimrc" -c PluginInstall -c qa
+#   become: true

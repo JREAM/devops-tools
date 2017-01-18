@@ -1,0 +1,41 @@
+---
+# --------------------------------------------------------------
+# Install Dependencies and Apt Packages per Ubuntu Version
+# --------------------------------------------------------------
+- name: install docker dependencies
+  apt: name={{ item }} state=present
+  items:
+    - apt-transport-https
+    - ca-certificates
+    - linux-image-extra-"{{ uname }}"
+    - linux-image-extra-virtual
+
+- name: install docker apt-key
+  apt_key:
+    keyserver=hkp://p80.pool.sks-keyservers.net:80 id=58118E89F3A912897C070ADBF76221572C52609D
+
+- name: add docker apt repository
+  apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-trusty main' state=present
+  when: ansible_distribution_release == "trusty"
+
+- name: add docker apt repository
+  apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-wily main' state=present
+  when: ansible_distribution_release == "wily"
+
+- name: add docker apt repository
+  apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-xenial main' state=present
+  when: ansible_distribution_release == "xenial"
+
+- name: apt update
+  apt:
+    update_cache: yes
+
+# --------------------------------------------------------------
+# Finish Install Docker Engine
+# --------------------------------------------------------------
+- name: install docker engine
+  apt: name=docker-engine
+  notify: docker restart
+
+- name: create docker group
+  group: name=docker state=present

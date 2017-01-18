@@ -1,0 +1,6 @@
+---
+# --------------------------------------------------------------
+# Include Subpackages to install to keep uncluttered
+# --------------------------------------------------------------
+- include: rkhunter.yml
+- include: clamav.yml

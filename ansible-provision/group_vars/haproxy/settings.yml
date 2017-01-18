@@ -1,0 +1,7 @@
+---
+tags:
+  - balancer
+  - haproxy
+ips:
+  - 192.168.1.1
+  - 199.199.2.2

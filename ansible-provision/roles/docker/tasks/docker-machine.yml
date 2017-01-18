@@ -1,0 +1,9 @@
+---
+# --------------------------------------------------------------
+# Install the all powerful docker machine
+# --------------------------------------------------------------
+- name: install docker machine
+  get_url:
+    url: https://github.com/docker/machine/releases/download/v0.8.2/docker-machine-"{{ uname_kernel_name }}"-"{{ uname_machine }}"
+    dest: /usr/local/bin/docker-machine
+    mode: 0774
